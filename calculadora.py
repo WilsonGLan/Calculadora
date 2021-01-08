@@ -1,38 +1,31 @@
-operadores = []
-operandos = []
-digitos = []
-unir = ''
-signo = 1
-flagListar = True
-
-
 print('PRIMERA VERSIÓN DE CALCULADORA')
-pantalla = input('Escriba el termino ')
+print('Solo puede ingresar expresiones matematicas que sean de suma, resta, multiplicación o división')
+cadena = input('Escriba el termino: ')
 
+nuevo = cadena.replace(' ', '')
+print(nuevo)
+contAlph = 0
+exprFin = ''
+listChar = []
 
-if pantalla.isdigit() == False:
-    for i in pantalla:
-      if i in '.+-*x/0123456789':        
-        digitos.append(i)
+for i in nuevo:
+  if i.isalpha() == True:
+    contAlph += 1
+  else:
+    listChar.append(i)
+
+if contAlph == 0:
+  for n in range(len(listChar)):
+    if listChar[n] in '(' and listChar[n-1] not in '+-*/' and n-1 != -1:
+      exprFin = exprFin + '*('
+    elif listChar[n] in ')' and n+1 < len(listChar):
+      if listChar[n+1] not in '+-*/':
+        exprFin = exprFin + ')*'
       else:
-        print('No se puede realizar ninguna operación, vuelva a intentarlo')
-        flagListar = False
-        break
-print('lista: ',digitos)
+        exprFin = exprFin+ ')'
+    else:
+      exprFin = exprFin + listChar[n]
+else:
+  print('No se puede evaluar')
 
-if flagListar == True:
-  for j in range(len(digitos)):
-    if digitos[j] in '0123456789.':
-      unir=unir+digitos[j]
-    if digitos[j] in '+-*x/':
-      if digitos[j-1] == '+' and digitos[j] == '-':
-        signo*=-1
-      print(signo)
-      if unir != '':
-        numero = float(unir)*signo
-        operandos.append(numero)
-        operadores.append(digitos[j])
-        signo = 1
-      unir = ''          
-    if len(digitos) == j+1 and unir != '':    
-      operandos.append(float(unir)*signo)
+print(eval(exprFin))
