@@ -14,6 +14,7 @@ for i in nuevo:
   else:
     listChar.append(i)
 
+""" Código anterior
 if contAlph == 0:
   for n in range(len(listChar)):
     if listChar[n] in '(' and listChar[n-1] not in '+-*/' and n-1 != -1:
@@ -25,6 +26,19 @@ if contAlph == 0:
         exprFin = exprFin+ ')'
     else:
       exprFin = exprFin + listChar[n]
+else:
+  print('No se puede evaluar')
+ """
+
+
+if contAlph == 0:
+  for n in range(len(listChar)):
+    if listChar[n] in '(' and listChar[n - 1] not in '+-*/' and n != 0:
+      exprFin += '*('
+    elif listChar[n] in ')' and n+1 < len(listChar):
+      exprFin += ')*' if listChar[n+1] not in '+-*/' else ')'
+    else:
+      exprFin += listChar[n]
 else:
   print('No se puede evaluar')
 
